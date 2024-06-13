@@ -8,7 +8,7 @@ class Game:
     def __init__(self):
         pygame.init()
         load_assets()  # load the game image assets
-        self.window = pygame.display.set_mode((800, 600))
+        self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
         self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
         self.game_map = Map(self.window)  # Create an instance of the Map class
@@ -50,7 +50,9 @@ class Game:
                 if event.type == pygame.QUIT:  # If the event type is QUIT
                     pygame.quit()  # Quit pygame
                     return  # Exit the run method
+            
 
 if __name__ == "__main__":
     game = Game()  # Create an instance of the Game class
     game.run()  # Run the game
+

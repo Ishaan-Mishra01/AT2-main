@@ -3,7 +3,7 @@ import random
 import pygame
 from assets import GAME_ASSETS
 from enemy import Enemy
-
+from character import Character
 
 class Map:
     def __init__(self, window):
@@ -44,6 +44,7 @@ class Map:
         self.player_type = character_type
         self.player_image = self.player_images[character_type]
         self.player_image = pygame.transform.scale(self.player_image, (int(self.player_image.get_width() * 0.15), int(self.player_image.get_height() * 0.15)))
+        self.player = Character("Player", character_type, 5)
 
     def check_for_combat(self):
         """
@@ -66,7 +67,7 @@ class Map:
         if self.in_combat and self.current_enemy:
             player_damage = random.randint(5, 10)
             enemy_defeated = self.current_enemy.take_damage(player_damage)
-            print(f"Player attacks! Deals {player_damage} damage to the enemy.")
+            print(f"Player attacks! Deals {player_damage} damage to the enemy. Enemy has {self.current_enemy.health} health.")
             if enemy_defeated:
                 print("Enemy defeated!")
                 self.enemies.remove(self.current_enemy)
@@ -76,7 +77,9 @@ class Map:
                     self.spawn_blue_orb()
             else:
                 enemy_damage = random.randint(5, 10)
+                
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
+                self.player.take_damage(enemy_damage)
                 # Assume player has a method to take damage
                 # self.player.take_damage(enemy_damage)
 
@@ -112,15 +115,25 @@ class Map:
             return 'quit'  # Stop processing events if game is over
 
         keys = pygame.key.get_pressed()
-        move_speed = 2
+        move_speed = 1
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
         if keys[pygame.K_LEFT]:
             self.player_position[0] -= move_speed
+            if self.player_position[0] <= 0:
+                self.player_position[0] = 0
         if keys[pygame.K_RIGHT]:
             self.player_position[0] += move_speed
+            if self.player_position[0] >= 1420:
+                self.player_position[0] = 1420
         if keys[pygame.K_UP]:
             self.player_position[1] -= move_speed
+            if self.player_position[1] <= 0:
+                self.player_position[1] = 0
         if keys[pygame.K_DOWN]:
             self.player_position[1] += move_speed
+            if self.player_position[1] >= 875: #-542 from x axis and then adjust
+                self.player_position[1] = 875
 
         if not self.in_combat:
             if self.check_for_combat():
@@ -142,3 +155,5 @@ class Map:
         if self.blue_orb:
             self.window.blit(self.blue_orb, self.orb_position)
         pygame.display.flip()
+
+    
