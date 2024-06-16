@@ -45,6 +45,7 @@ class Map:
         self.player_image = self.player_images[character_type]
         self.player_image = pygame.transform.scale(self.player_image, (int(self.player_image.get_width() * 0.15), int(self.player_image.get_height() * 0.15)))
         self.player = Character("Player", character_type, 5)
+        self.player_death = False
 
     def check_for_combat(self):
         """
@@ -80,8 +81,12 @@ class Map:
                 
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 self.player.take_damage(enemy_damage)
+
                 # Assume player has a method to take damage
                 # self.player.take_damage(enemy_damage)
+            if self.player.hit_points <= 0:
+                self.player_death = True
+
 
     def spawn_blue_orb(self):
         """
@@ -113,6 +118,7 @@ class Map:
         """
         if self.game_over:
             return 'quit'  # Stop processing events if game is over
+        #
 
         keys = pygame.key.get_pressed()
         move_speed = 1
@@ -142,6 +148,8 @@ class Map:
 
         if self.blue_orb and self.check_orb_collision():
             return 'quit'
+        if self.player_death == True:
+            return 'lose'
 
     def draw(self):
         """

@@ -3,6 +3,8 @@ from menu import MainMenu
 from character_select import CharacterSelect
 from map import Map
 from assets import load_assets, GAME_ASSETS
+from LoseScreen import loseScreen
+
 
 class Game:
     def __init__(self):
@@ -45,6 +47,8 @@ class Game:
                     return  # Exit the run method
                 else:
                     self.game_map.draw()  # Draw the game map
+            elif self.state == 'lose_screen':
+                pass
 
             for event in pygame.event.get():  # Iterate over the events in the event queue
                 if event.type == pygame.QUIT:  # If the event type is QUIT
