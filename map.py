@@ -1,9 +1,44 @@
 import random
-
 import pygame
 from assets import GAME_ASSETS
 from enemy import Enemy
 from character import Character
+
+class HealthBar():
+    def __init__(self, x, y, w, h, player):
+        """
+        Initialize the HealthBar.
+
+        Args:
+            x (int): The x-coordinate of the health bar.
+            y (int): The y-coordinate of the health bar.
+            w (int): The width of the health bar.
+            h (int): The height of the health bar.
+            player (Character): The player character instance.
+        """
+        self.x = x
+        self.y = y
+        self.width = w
+        self.height = h
+        self.player = player  # The player character instance
+        self.max_hp = player.max_hp  # Access max_hp from the player character
+        self.current_hp = player.hit_points
+
+    def update(self):
+        """Update the current health based on the player's health."""
+        self.current_hp = self.player.hit_points
+
+    def draw(self, screen):
+        """Draw the health bar on the screen."""
+        # Calculate health percentage
+        health_percentage = self.current_hp / self.max_hp
+        current_width = int(self.width * health_percentage)
+
+        # Draw the background bar (empty health)
+        pygame.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.width, self.height))
+        # Draw the foreground bar (current health)
+        pygame.draw.rect(screen, (0, 255, 0), (self.x, self.y, current_width, self.height))
+
 
 class Map:
     def __init__(self, window):
@@ -13,6 +48,7 @@ class Map:
         Args:
             window (pygame.Surface): The game window surface.
         """
+        self.health_bar = None
         self.window = window
         self.map_image = pygame.image.load(GAME_ASSETS["dungeon_map"]).convert_alpha()
         self.map_image = pygame.transform.scale(self.map_image, (self.window.get_width(), self.window.get_height()))
@@ -45,6 +81,8 @@ class Map:
         self.player_image = self.player_images[character_type]
         self.player_image = pygame.transform.scale(self.player_image, (int(self.player_image.get_width() * 0.15), int(self.player_image.get_height() * 0.15)))
         self.player = Character("Player", character_type, 5)
+        self.player_death = False
+        self.health_bar = HealthBar(10, 10, 200, 20, self.player)  # Initialize health bar with player
 
     def check_for_combat(self):
         """
@@ -61,9 +99,6 @@ class Map:
         return False
 
     def handle_combat(self):
-        """
-        Handle combat between the player and the current enemy.
-        """
         if self.in_combat and self.current_enemy:
             player_damage = random.randint(5, 10)
             enemy_defeated = self.current_enemy.take_damage(player_damage)
@@ -77,11 +112,13 @@ class Map:
                     self.spawn_blue_orb()
             else:
                 enemy_damage = random.randint(5, 10)
-                
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 self.player.take_damage(enemy_damage)
-                # Assume player has a method to take damage
-                # self.player.take_damage(enemy_damage)
+
+            if self.player.hit_points <= 0:
+                self.player_death = True
+                return 'lose'
+            self.health_bar.update()
 
     def spawn_blue_orb(self):
         """
@@ -113,6 +150,7 @@ class Map:
         """
         if self.game_over:
             return 'quit'  # Stop processing events if game is over
+        #
 
         keys = pygame.key.get_pressed()
         move_speed = 1
@@ -142,6 +180,10 @@ class Map:
 
         if self.blue_orb and self.check_orb_collision():
             return 'quit'
+        if self.player_death == True:
+            return 'lose'
+        
+        
 
     def draw(self):
         """
@@ -154,6 +196,5 @@ class Map:
             enemy.draw()
         if self.blue_orb:
             self.window.blit(self.blue_orb, self.orb_position)
+        self.health_bar.draw(self.window)
         pygame.display.flip()
-
-    
