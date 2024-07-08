@@ -14,9 +14,9 @@ class loseScreen():
         self.LOSE_TEXT = makeFont(100).render("You Died!", True, "#93221c")
         self.LOSE_TEXT_RECT = self.LOSE_TEXT.get_rect(center=(self.window.get_width() // 2, 100))
 
-        self.MENU_BUTTON = Button(image=pygame.image.load("Quit Rect.png"), pos=(self.window.get_width() // 2, 400), 
-                                  text_input="Main Menu", font=makeFont(75), base_color="#20148f", hovering_color="White")
-        self.QUIT_BUTTON = Button(image=pygame.image.load("Quit Rect.png"), pos=(self.window.get_width() // 2, 550), 
+        self.MAIN_MENU_BUTTON = Button(image=pygame.image.load("Quit Rect.png"), pos=(self.window.get_width() // 2, 400), 
+                                  text_input="Menu", font=makeFont(75), base_color="#20148f", hovering_color="White")
+        self.QUIT_BUTTON = Button(image=pygame.image.load("Quit Rect.png"), pos=(self.window.get_width() // 2, 525), 
                                   text_input="Quit", font=makeFont(75), base_color="#20148f", hovering_color="White")
 
     def run(self):
@@ -26,7 +26,7 @@ class loseScreen():
         while running:
             self.window.blit(self.scaled_background, (0, 0))
             self.window.blit(self.LOSE_TEXT, self.LOSE_TEXT_RECT)
-            for button in [self.MENU_BUTTON, self.QUIT_BUTTON]:
+            for button in [self.MAIN_MENU_BUTTON, self.QUIT_BUTTON]:
                 button.changeColor(mouse_pos)
                 button.update(self.window)
             pygame.display.flip()
@@ -36,7 +36,7 @@ class loseScreen():
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.MENU_BUTTON.checkForInput(event.pos):
+                    if self.MAIN_MENU_BUTTON.checkForInput(event.pos):
                         return 'menu'  # Return 'menu' when Main Menu button is clicked
                     if self.QUIT_BUTTON.checkForInput(event.pos):
                         pygame.quit()
