@@ -13,7 +13,6 @@ class Game:
         self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
         self.character_select = CharacterSelect(self.window)  # Create an instance of the CharacterSelect class
-        self.game_map = Map(self.window)  # Create an instance of the Map class
         self.state = 'menu'  # Set the initial state to 'menu'
         self.current_character = None  # To store the chosen character
         self.health_bar = None  # Initialize health bar
@@ -36,6 +35,7 @@ class Game:
                     self.state = 'menu'  # Change the state to 'menu'
                 elif selected_character_class:  # If a character class is selected
                     self.current_character = Character("Player", selected_character_class, "Basic Armor")  # Set the current character to the selected character
+                    self.game_map = Map(self.window)  # Re-initialize the Map class
                     self.game_map.load_player(selected_character_class)  # Load the selected character into the game map
                     self.health_bar = self.game_map.health_bar  # Initialize health bar with the one from game_map
                     self.state = 'game_map'  # Change the state to 'game_map'
@@ -58,7 +58,7 @@ class Game:
             elif self.state == 'lose_screen':
                 lose_screen = loseScreen(self.window)
                 result = lose_screen.run()  # Run the lose screen and get the result
-                if result == 'menu':  # If result is 'menu' from lose screen
+                if result == 'menu':  # If result is menu from lose screen
                     self.state = 'menu'  # Change state back to 'menu'
 
             for event in pygame.event.get():  # Iterate over the events in the event queue

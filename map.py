@@ -4,7 +4,7 @@ from assets import GAME_ASSETS
 from enemy import Enemy
 from character import Character
 
-class HealthBar():
+class HealthBar:
     def __init__(self, x, y, w, h, player):
         """
         Initialize the HealthBar.
