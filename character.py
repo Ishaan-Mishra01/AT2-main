@@ -11,7 +11,7 @@ class Character():
     skills = {}  # Example empty dictionary for character's skills
     inventory = []
     gold = None 
-    max_hp = 50
+    max_hp = 100
 
     def __init__(self, name, character_class, armor):
         self.name = name  # Character's name
