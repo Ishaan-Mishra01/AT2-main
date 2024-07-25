@@ -8,7 +8,7 @@ class Warrior(Character):
         self.stamina_regeneration = 10
         self.strength = 20
         self.max_hp = max_hp+50
-        self.current_hp = max_hp+50
+        self.current_hp = max_hp
         self.attacks = {
             "Basic Attack": {"method": self.basic_attack, "stamina_cost": 10},
             "Charge": {"method": self.charge, "stamina_cost": 10},

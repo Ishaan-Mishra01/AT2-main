@@ -9,7 +9,7 @@ class Rogue(Character):
         self.stamina_regeneration = 15
         self.strength = 18
         self.max_hp = max_hp - 20
-        self.current_hp = max_hp - 20
+        self.current_hp = max_hp
         self.attacks = {
             "Basic Attack": {"method": self.basic_attack, "stamina_cost": 10},
             "Shadow Strike": {"method": self.shadow_strike, "stamina_cost": 25},
@@ -79,7 +79,7 @@ class Rogue(Character):
             self.current_hp = min(self.max_hp, self.current_hp + 15)
             self.display_message(f"{self.name} drinks a health vial, healing up to 15 HP!")
 
-    def shadow_cloak(self, target):
+    def shadow_cloak(self):
         self.display_message(f"{self.name} uses Shadow Cloak, preventing any damage this turn!")
         self.shadow_cloak_active = True
 

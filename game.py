@@ -1,4 +1,3 @@
-# game.py
 import pygame
 from menu import MainMenu
 from character_select import CharacterSelect

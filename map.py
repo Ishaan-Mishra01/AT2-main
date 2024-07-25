@@ -154,6 +154,17 @@ class Map:
 
     def handle_combat(self):
         if self.in_combat and self.current_enemy:
+            '''
+            current_fighter = 1
+            total_fighters = 2
+            action_cooldown = 0
+            action_wait_time = 90
+            if self.player.is_alive() == True:
+                if current_fighter ==1:
+                    action_cooldown+=1
+                    if action_cooldown>=action_wait_time:
+                        self.player.
+            '''
             player_damage = random.randint(5, 10) * self.level
             enemy_defeated = self.current_enemy.take_damage(player_damage)
             print(f"Player attacks! Deals {player_damage} damage to the enemy. Enemy has {self.current_enemy.health} health.")
@@ -170,10 +181,11 @@ class Map:
                 print(f"Enemy attacks back! Deals {enemy_damage} damage to the player.")
                 self.player.take_damage(enemy_damage)
 
-            if self.player.hit_points <= 0:
+            if self.player.is_alive == False:
                 self.player_death = True
-                return 'lose'
+                return 'lose'  # Return 'lose' when the player's health is 0 or less
             self.health_bar.update()
+
 
     def draw(self):
         """
