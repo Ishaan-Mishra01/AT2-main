@@ -12,6 +12,9 @@ class Character():
     inventory = []
     gold = None 
     max_hp = 100
+    max_stamina = 100
+    stamina = 100
+
 
     def __init__(self, name, character_class, armor):
         self.name = name  # Character's name
@@ -26,6 +29,9 @@ class Character():
         self.gold = 0  # Example starting value for character's gold
         self.attribute_points = 0  # Attribute points available to allocate
         self.max_hp = 50  # Maximum hit points for the character
+        self.max_stamina = 50
+        self.stamina = 50
+
 
     #accessors
     def getMAXLEVEL(self):
@@ -117,7 +123,8 @@ class Character():
         while self.experience_points >= required_experience and self.level < self.MAX_LEVEL:
             self.level += 1  # Level up the character
             self.experience_points -= required_experience  # Decrease character's experience points
-            self.hit_points += 10  # Example: Increase hit points by 10 each level up
+            self.max_hp += 10  # Example: Increase max hit points by 10 each level up
+            self.hit_points = min(self.max_hp, self.hit_points + 10)  # Restore some health on level up
             self.attribute_points += self.ATTRIBUTE_POINTS_PER_LEVEL  # Allocate attribute points
             print(f"Level up! {self.name} is now level {self.level}.")
             # Calculate experience required for next level

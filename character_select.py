@@ -46,24 +46,30 @@ class CharacterSelect:
             dict: A dictionary mapping character names to their button rectangles.
         """
         buttons = {}
-        total_spacing = 40  # spacing between buttons and edges
+        total_spacing = 60  # spacing between buttons and edges
         num_buttons = len(self.characters)
         available_width = self.window.get_width() - total_spacing * (num_buttons + 1)
+        
+        # Scale up the button height
+        height_scaling_factor = 1.8  # Adjust this to make the height bigger
+        max_height = int((self.window.get_height() // 3) * height_scaling_factor)  # maximum button height
         button_width = available_width // num_buttons
-        max_height = self.window.get_height() // 4  # maximum button height
 
         x = total_spacing
         y = self.window.get_height() // 3 - max_height // 2  # position them a bit higher to make space for back button
 
         for character, image in self.characters.items():
-            aspect_ratio = image.get_height() / image.get_width()
-            button_height = int(button_width * aspect_ratio)
-            button_height = min(button_height, max_height)  # Ensure button isn't too tall
+            aspect_ratio = image.get_width() / image.get_height()
+            button_height = max_height
+            button_width = int(button_height * aspect_ratio)
             scaled_image = pygame.transform.scale(image, (button_width, button_height))
             buttons[character] = (scaled_image, pygame.Rect(x, y, button_width, button_height))
             x += button_width + total_spacing
 
         return buttons
+
+
+
 
     def run(self):
         running = True

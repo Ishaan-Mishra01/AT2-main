@@ -1,3 +1,4 @@
+# game.py
 import pygame
 from menu import MainMenu
 from character_select import CharacterSelect
@@ -9,6 +10,7 @@ from character import Character
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.display.set_caption("Kings Quest")
         load_assets()  # load the game image assets
         self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.menu = MainMenu(self.window)  # Create an instance of the MainMenu class
@@ -16,6 +18,7 @@ class Game:
         self.state = 'menu'  # Set the initial state to 'menu'
         self.current_character = None  # To store the chosen character
         self.health_bar = None  # Initialize health bar
+        self.level = 1  # Initialize the starting level
 
     def run(self):
         while True:
@@ -35,7 +38,7 @@ class Game:
                     self.state = 'menu'  # Change the state to 'menu'
                 elif selected_character_class:  # If a character class is selected
                     self.current_character = Character("Player", selected_character_class, "Basic Armor")  # Set the current character to the selected character
-                    self.game_map = Map(self.window)  # Re-initialize the Map class
+                    self.game_map = Map(self.window, self.level)  # Re-initialize the Map class with the current level
                     self.game_map.load_player(selected_character_class)  # Load the selected character into the game map
                     self.health_bar = self.game_map.health_bar  # Initialize health bar with the one from game_map
                     self.state = 'game_map'  # Change the state to 'game_map'
@@ -49,6 +52,11 @@ class Game:
                     return  # Exit the run method
                 elif result == 'lose':  # If the result is 'lose'
                     self.state = 'lose_screen'
+                elif result == 'next_level':  # If the result is 'next_level'
+                    self.level += 1  # Increment the level
+                    self.game_map = Map(self.window, self.level)  # Re-initialize the Map class with the new level
+                    self.game_map.load_player(self.current_character.character_class)  # Load the player character into the new map
+                    self.state = 'game_map'  # Ensure the state remains 'game_map'
                 else:
                     self.game_map.draw()  # Draw the game map
                     if self.health_bar:
@@ -65,7 +73,7 @@ class Game:
                 if event.type == pygame.QUIT:  # If the event type is QUIT
                     pygame.quit()  # Quit pygame
                     return  # Exit the run method
-            
+
 if __name__ == "__main__":
     game = Game()  # Create an instance of the Game class
     game.run()  # Run the game
