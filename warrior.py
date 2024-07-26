@@ -1,6 +1,13 @@
 from character import Character
 import random
 class Warrior(Character):
+    max_stamina = None
+    current_stamina = None
+    stamina_regeneration = None
+    max_hp = 100
+    strength =None
+    current_hp = None
+    attacks = None
     def __init__(self, name, max_hp):
         super().__init__(name, "Warrior", 10)
         self.max_stamina = 100
@@ -88,3 +95,46 @@ class Warrior(Character):
         self.armor_class += 5  # Example: Defensive stance increases armor class by 5
         self.display_message(f"{self.name} enters a defensive stance, increasing armor class!")
 
+    # Accessor methods (getters)
+    def get_max_stamina(self):
+        return self.max_stamina
+
+    def get_current_stamina(self):
+        return self.current_stamina
+
+    def get_stamina_regeneration(self):
+        return self.stamina_regeneration
+
+    def get_max_hp(self):
+        return self.max_hp
+
+    def get_strength(self):
+        return self.strength
+
+    def get_current_hp(self):
+        return self.current_hp
+
+    def get_attacks(self):
+        return self.attacks
+
+    # Mutator methods (setters)
+    def set_max_stamina(self, max_stamina):
+        self.max_stamina = max_stamina
+
+    def set_current_stamina(self, current_stamina):
+        self.current_stamina = current_stamina
+
+    def set_stamina_regeneration(self, stamina_regeneration):
+        self.stamina_regeneration = stamina_regeneration
+
+    def set_max_hp(self, max_hp):
+        self.max_hp = max_hp
+
+    def set_strength(self, strength):
+        self.strength = strength
+
+    def set_current_hp(self, current_hp):
+        self.current_hp = current_hp
+
+    def set_attacks(self, attacks):
+        self.attacks = attacks

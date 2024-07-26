@@ -38,6 +38,50 @@ class HealthBar:
         pygame.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.width, self.height))
         # Draw the foreground bar (current health)
         pygame.draw.rect(screen, (0, 255, 0), (self.x, self.y, current_width, self.height))
+    # Accessor methods (getters)
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
+    def get_width(self):
+        return self.width
+
+    def get_height(self):
+        return self.height
+
+    def get_player(self):
+        return self.player
+
+    def get_initial_max_hp(self):
+        return self.initial_max_hp
+
+    def get_current_hp(self):
+        return self.current_hp
+
+    # Mutator methods (setters)
+    def set_x(self, x):
+        self.x = x
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_width(self, width):
+        self.width = width
+
+    def set_height(self, height):
+        self.height = height
+
+    def set_player(self, player):
+        self.player = player
+
+    def set_initial_max_hp(self, initial_max_hp):
+        self.initial_max_hp = initial_max_hp
+
+    def set_current_hp(self, current_hp):
+        self.current_hp = current_hp
+
 
 
 class StaminaBar:
@@ -68,6 +112,49 @@ class StaminaBar:
         current_width = int(self.width * stamina_percentage)
         pygame.draw.rect(screen, (255, 255, 0), (self.x, self.y, self.width, self.height))
         pygame.draw.rect(screen, (0, 0, 255), (self.x, self.y, current_width, self.height))
+    # Accessor methods (getters)
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
+    def get_width(self):
+        return self.width
+
+    def get_height(self):
+        return self.height
+
+    def get_player(self):
+        return self.player
+
+    def get_max_stamina(self):
+        return self.max_stamina
+
+    def get_current_stamina(self):
+        return self.current_stamina
+
+    # Mutator methods (setters)
+    def set_x(self, x):
+        self.x = x
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_width(self, width):
+        self.width = width
+
+    def set_height(self, height):
+        self.height = height
+
+    def set_player(self, player):
+        self.player = player
+
+    def set_max_stamina(self, max_stamina):
+        self.max_stamina = max_stamina
+
+    def set_current_stamina(self, current_stamina):
+        self.current_stamina = current_stamina
 
 
 class Map:
@@ -272,3 +359,66 @@ class Map:
         self.health_bar.update()
         self.stamina_bar.update()
         self.draw()
+
+
+    # Accessor methods (getters)
+    def get_health_bar(self):
+        return self.health_bar
+
+    def get_stamina_bar(self):
+        return self.stamina_bar
+
+    def get_window(self):
+        return self.window
+
+    def get_level(self):
+        return self.level
+
+    def get_player_position(self):
+        return self.player_position
+
+    def get_enemies(self):
+        return self.enemies
+
+    def get_in_combat(self):
+        return self.in_combat
+
+    def get_current_enemy(self):
+        return self.current_enemy
+
+    def get_blue_orb(self):
+        return self.blue_orb
+
+    def get_game_over(self):
+        return self.game_over
+
+    # Mutator methods (setters)
+    def set_health_bar(self, health_bar):
+        self.health_bar = health_bar
+
+    def set_stamina_bar(self, stamina_bar):
+        self.stamina_bar = stamina_bar
+
+    def set_window(self, window):
+        self.window = window
+
+    def set_level(self, level):
+        self.level = level
+
+    def set_player_position(self, player_position):
+        self.player_position = player_position
+
+    def set_enemies(self, enemies):
+        self.enemies = enemies
+
+    def set_in_combat(self, in_combat):
+        self.in_combat = in_combat
+
+    def set_current_enemy(self, current_enemy):
+        self.current_enemy = current_enemy
+
+    def set_blue_orb(self, blue_orb):
+        self.blue_orb = blue_orb
+
+    def set_game_over(self, game_over):
+        self.game_over = game_over
